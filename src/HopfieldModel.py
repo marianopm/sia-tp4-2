@@ -73,7 +73,7 @@ def mutate(patterns, rate):
 
    return mutated_letter
 
-def ortogonality(patterns):
+def ortogonality4(patterns):
    orto_matrix = patterns.dot(patterns.T)
    np.fill_diagonal(orto_matrix, 0)
 
@@ -90,7 +90,7 @@ def plot_patterns(pattern, desc):
     num_rows = math.ceil(math.sqrt(num_letters))
     num_cols = math.ceil(num_letters / num_rows)
     
-    fig, axs = plt.subplots(num_rows, num_cols, figsize=(9, 9))
+    fig, axs = plt.subplots(num_rows, num_cols, figsize=(2, 2))
     fig.subplots_adjust(hspace=0.2)
     
     #Matriz adicional para mantener la consistencia
@@ -108,7 +108,7 @@ def plot_patterns(pattern, desc):
     for ax in axs.flat[num_letters:]:
         ax.remove()
 
-    fig.suptitle(desc, fontsize=20, fontweight="bold")
+    fig.suptitle(desc, fontsize=12, fontweight="bold")
     plt.show()
 
 def create_pattern_plot(letter, ax):

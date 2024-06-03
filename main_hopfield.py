@@ -17,7 +17,7 @@ def main():
         letters_to_train.append(letters[idx])
     letters_to_train = np.array(letters_to_train)
 
-    avg_dot_product, max_value, max_dot_product = ortogonality(letters_to_train) 
+    avg_dot_product, max_value, max_dot_product = ortogonality4(letters_to_train) 
     plot_patterns(letters_to_train, f"Patrones Almacenados con Ortogonalidad {avg_dot_product} (max={max_value} , count={max_dot_product})")
 
     hopfield = Hopfield(letters_to_train, data['epochs'])
