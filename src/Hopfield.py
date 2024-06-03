@@ -1,4 +1,6 @@
+import math
 import numpy as np
+import matplotlib.pyplot as plt
 
 class Hopfield:
 
@@ -63,3 +65,74 @@ def get_patterns(file_path):
 
     return pattern
 
+def mutate(patterns, rate):
+   mutated_letter = np.copy(patterns)
+   for i in range(len(patterns)):
+      if np.random.default_rng().random() < rate:
+         mutated_letter[i] *= -1
+
+   return mutated_letter
+
+def ortogonality(patterns):
+   orto_matrix = patterns.dot(patterns.T)
+   np.fill_diagonal(orto_matrix, 0)
+
+   row, _ = orto_matrix.shape
+   #El producto punto promedio de los vectores.
+   avg_dot_product = round(np.abs(orto_matrix).sum() / (orto_matrix.size - row), 3)
+   max_value = np.abs(orto_matrix).max()
+   #El numero de vectores que tienen el producto punto maximo.
+   max_dot_product = np.count_nonzero(np.abs(orto_matrix) == max_value) / 2
+   return avg_dot_product, max_value, max_dot_product
+
+def plot_patterns(pattern, desc):
+    num_letters = len(pattern)
+    num_rows = math.ceil(math.sqrt(num_letters))
+    num_cols = math.ceil(num_letters / num_rows)
+    
+    fig, axs = plt.subplots(num_rows, num_cols, figsize=(9, 9))
+    fig.subplots_adjust(hspace=0.2)
+    
+    #Matriz adicional para mantener la consistencia
+    if num_letters == 1:
+        axs = np.array([[axs]])  
+    elif num_letters == 2:
+        axs = axs[np.newaxis, :] if num_rows == 1 else axs[:, np.newaxis]
+    
+    for i, letter in enumerate(pattern):
+        row = i // num_cols
+        col = i % num_cols
+        ax = axs[row, col]
+        create_pattern_plot(letter, ax)
+
+    for ax in axs.flat[num_letters:]:
+        ax.remove()
+
+    fig.suptitle(desc, fontsize=20, fontweight="bold")
+    plt.show()
+
+def create_pattern_plot(letter, ax):
+    array = np.array(letter).reshape((5, 5))
+    cmap = plt.cm.get_cmap('Greens')
+    cmap.set_under(color='white')
+
+    ax.imshow(array, cmap=cmap, vmin=-1, vmax=1)
+
+    # Marco
+    for i in range(6):
+        ax.plot([-0.5, 4.5], [i-0.5, i-0.5], color='black', linewidth=2)
+        ax.plot([i-0.5, i-0.5], [-0.5, 4.5], color='black', linewidth=2)
+
+    for i in range(5):
+        for j in range(5):
+            if array[i, j] == 1:   
+                ax.add_patch(plt.Rectangle((j-0.5, i-0.5), 1, 1, linewidth=2, edgecolor='black', facecolor='none'))
+
+    ax.axis('off')
+
+def plot_energy(array_energy):
+    plt.plot(range(len(array_energy)), array_energy, color='red')
+    plt.ylabel('Energia')
+    plt.xlabel("Iteraciones")
+    plt.title('Función de energia')
+    plt.show()
