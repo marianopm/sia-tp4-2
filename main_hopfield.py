@@ -6,7 +6,7 @@ def main():
     with open('./config_hopfield.json', 'r') as f:
         data = json.load(f)
 
-    letters = get_patterns("data/letters-1.txt")
+    letters = get_patterns("data/letters.txt")
 
     plot_patterns(letters, "Patrones")
 
