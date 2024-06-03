@@ -4,15 +4,13 @@ import math
 from sklearn.preprocessing import StandardScaler
 
 class Kohonen:
-    def __init__(self, data, radius, k, learningaRate):
+    def __init__(self, data, radius, k, learningaRate, epochs):
         self.data = data
-        self.dataWithoutColumns = data.iloc[:, 1:]
         self.k = k
-        self.epochs = k
+        self.epochs = epochs
         self.radius = radius
         self.learningRate = learningaRate
-        self.function = EuclideanDistance()
-        self.standarized_data = self.standarize(data)
+        self.data = self.standarize(data)
         #Creo las neursonas
         self.neuronsMatrix = self.createNeurons(self.k)
         self.init_weights(self.neuronsMatrix, data.shape[1])
@@ -44,7 +42,8 @@ class Kohonen:
         pass
         
     def start(self):
-        pass
+        winner, row, column = self.find_neuron()
+        print(winner)
     
     def find_neuron(self):
         actualNeuronWinner = None

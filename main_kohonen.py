@@ -11,9 +11,8 @@ def main():
     data_europe_without_countries = data_europe.iloc[:, 1:]
     data_europe_with_column_names = pd.read_csv('./data/europe.csv')
     
-    print(data_europe)
 
-    network = Kohonen(data_europe_without_countries, data['radius'], data['k'], data['learning_rate'])
+    network = Kohonen(data_europe_without_countries, data['radius'], data['k'], data['learning_rate'], data['epochs'])
     network.start()
     
 if __name__ == "__main__":
