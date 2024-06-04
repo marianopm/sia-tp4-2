@@ -58,6 +58,9 @@ class Kohonen:
             for i in shuffled_list:
                 actualNeuronWinner, winner_row, winner_column = self.get_neuron(i)
                 self.updateNeighbours(winner_row, winner_column, self.data[i], self.learningRate if iterations == 0 else 1/iterations)
+                actualNeuronWinner.countWinner += 1
+                if iterations == self.epochs-1:
+                    actualNeuronWinner.countWinnerIteration += 1
             iterations +=1
         return actualNeuronWinner, winner_row, winner_column
     
@@ -120,6 +123,8 @@ class Neuron:
     def __init__(self):
         self.weights = 0
         self.country = None
+        self.countWinner = 0                #veces que es seleccionada
+        self.countWinnerIteration = 0       # veces que es seleccionada en la ultima iteracion
         
     def initWeights(self, length):
         # creo peso random -1,1
