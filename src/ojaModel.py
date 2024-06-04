@@ -24,8 +24,8 @@ class Oja:
             j = 0
             while j < len(shuffled_list):
                 pastWeights = self.weights
-                y = np.dot(training_set[j], self.weights)
-                self.weights = self.weights + self.learningRate * y * (training_set[j]-(y*self.weights))
+                O = np.dot(training_set[j], self.weights)
+                self.weights = self.weights + self.learningRate * O * (training_set[j]-(O*self.weights))
                 j += 1
             i += 1
 

@@ -7,7 +7,7 @@ class Kohonen:
     def __init__(self, data, radius, k, learningaRate, epochs):
         self.data = data
         self.k = k
-        self.epochs = epochs
+        self.epochs = epochs * k
         self.radius = radius
         self.learningRate = learningaRate
         self.data = self.standarize(data)

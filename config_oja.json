@@ -1,6 +1,6 @@
 {
     "k": 2,
-    "learning_rate": 0.0001,
+    "learning_rate": 0.001,
     "radius": 1,
     "epochs": 3000
 }
